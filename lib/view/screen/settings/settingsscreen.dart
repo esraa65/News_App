@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:news_app/constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:news_app/provider/appconfigprovider.dart';
 import 'package:news_app/view/screen/settings/languagebtnsheet.dart';
+import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -11,6 +13,7 @@ class SettingsScreen extends StatefulWidget {
 class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<AppConfigProvider>(context);
     return Stack(children: [
       Container(
         color: Colors.white,
@@ -39,7 +42,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 child: Text(
                   AppLocalizations.of(context)!.language,
                   style: TextStyle(
-                      fontSize: 24, color: Constants.sidebartextColor),
+                      fontSize: 24, color: Constants.textColor),
                 ),
               ),
               Container(
@@ -55,8 +58,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                         showLanguagebtnSheet();
                       },
                         child: Text(
-                          'English',
-                          style: TextStyle(fontSize: 22, color: Colors.teal),
+                          provider.GetSelectedLanguageText(),
+                          style: TextStyle(fontSize: 22, color: Constants.titlecolor),
                         ),
                       ),
                     ),

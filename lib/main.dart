@@ -2,11 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:news_app/constants.dart';
+import 'package:news_app/provider/appconfigprovider.dart';
 import 'package:news_app/view/screen/homescreen.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider<AppConfigProvider>(
+      create: (buildContext) {
+        return AppConfigProvider();
+      },
+      child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -15,12 +22,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<AppConfigProvider>(context);
     return MaterialApp(
       theme: Constants.lighttheme,
       home: AnimatedSplashScreen(
         backgroundColor: Colors.white,
         centered: true,
-        splashIconSize: 950,
+        splashIconSize: double.infinity,
         splash: 'assets/images/splash.png',
         nextScreen: HomeScreen(),
         splashTransition: SplashTransition.fadeTransition,
@@ -34,7 +42,7 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: AppLocalizations.supportedLocales,
-      locale: Locale('en'),
+      locale: Locale(provider.applanguage),
       // theme: ThemeData(primarySwatch: Colors.green,),
     );
   }
